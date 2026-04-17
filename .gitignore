@@ -1,0 +1,5 @@
+.env
+.env.*
+!.env.sync.example
+*.local
+.DS_Store

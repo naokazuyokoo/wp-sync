@@ -1,0 +1,62 @@
+# VCS
+.git/
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors / IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env / local-only config
+.env
+.env.*
+
+# Logs / cache / temp
+*.log
+.cache/
+tmp/
+temp/
+
+# Python cache (if mixed tooling exists)
+__pycache__/
+*.pyc
+
+# Test artifacts
+coverage/
+
+# wp-content/ sync exclusions
+/cache/
+/upgrade/
+/debug.log
+/object-cache.php
+/advanced-cache.php
+/db.php
+
+# uploads backup/cache exclusions (for wp-content/ sync)
+/uploads/updraft/
+/uploads/ai1wm-backups/
+/uploads/wpallexport/
+/uploads/wpallimport/
+/uploads/wpvividbackups/
+/uploads/backwpup-*/
+/uploads/cache/
+
+# uploads backup/cache exclusions (for uploads/ sync)
+/updraft/
+/ai1wm-backups/
+/wpallexport/
+/wpallimport/
+/wpvividbackups/
+/backwpup-*/
