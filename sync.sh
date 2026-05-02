@@ -246,7 +246,7 @@ rsync_with_ssh() {
   shift 2
 
   local -a cmd
-  cmd=(rsync -az --delete)
+  cmd=(rsync -avz --progress --delete)
 
   local backup_parent="" backup_dir=""
   if [[ "${BACKUP_ENABLE}" == "1" ]]; then
