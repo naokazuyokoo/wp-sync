@@ -5,6 +5,7 @@
 # OS files
 .DS_Store
 Thumbs.db
+.htaccess
 
 # Node / JS
 node_modules/
