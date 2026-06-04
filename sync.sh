@@ -201,7 +201,18 @@ sync_db() {
   if [[ "${SRC_ENV}" == "local" ]]; then
     local_wp db export "${dump_file}"
   else
-    ssh_base_cmd "$(prod_wp_cmd "db export -")" > "${dump_file}"
+    # Export to a remote temp file to avoid SSH/WP-CLI status text polluting
+    # the SQL stream when piping through stdout.
+    local prod_dump_tmp="/tmp/wp-export-${ts}.sql"
+    ssh_base_cmd "$(prod_wp_cmd "db export '${prod_dump_tmp}'")"
+    local rsh_e="ssh"
+    [[ -n "${SSH_PORT}" ]] && rsh_e="${rsh_e} -p ${SSH_PORT}"
+    [[ -n "${SSH_KEY}" ]]  && rsh_e="${rsh_e} -i ${SSH_KEY}"
+    rsync -az -e "${rsh_e}" "${PROD_HOST}:${prod_dump_tmp}" "${dump_file}"
+    ssh_base_cmd "rm -f $(printf "%q" "${prod_dump_tmp}")"
+    # MariaDB 10.6+ prepends /*M!999999\- enable the sandbox mode */ which
+    # MySQL client cannot parse. Strip it so the import works on both engines.
+    sed '/^\/\*M!999999/d' "${dump_file}" > "${dump_file}.tmp" && mv "${dump_file}.tmp" "${dump_file}"
   fi
 
   echo "Import DB to ${DST_ENV}"
