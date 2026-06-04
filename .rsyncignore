@@ -61,3 +61,7 @@ coverage/
 /wpallimport/
 /wpvividbackups/
 /backwpup-*/
+
+# MCP
+.playwright-cli/
+.playwright/
